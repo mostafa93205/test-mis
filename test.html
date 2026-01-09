@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MIS in Healthcare – Final Exam (Interactive)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  body{font-family:'Segoe UI',Tahoma,Helvetica,sans-serif;background:#f2f6ff;margin:0;padding:20px;color:#222}
+  h1{text-align:center;color:#003366}
+  .card{background:#fff;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,.15);padding:18px;margin:12px auto;max-width:800px}
+  .question{font-weight:600;margin-bottom:10px}
+  .options{margin-left:10px}
+  .options label{display:block;margin:6px 0;cursor:pointer}
+  button{cursor:pointer;background:#003366;color:#fff;border:none;padding:12px 28px;border-radius:4px;font-size:16px;display:block;margin:25px auto}
+  button:hover{background:#00509e}
+  .result{text-align:center;font-size:20px;margin-top:20px}
+  .correct{color:green}.wrong{color:red}
+</style>
+</head>
+<body>
+
+<h1>MIS in Healthcare Organizations – Final Exam</h1>
+<form id="examForm"></form>
+<button onclick="checkAnswers()">Submit & See Result</button>
+<div id="result" class="result"></div>
+
+<script>
+const mcq=[
+{q:"1. Which DIKW layer adds insight and actionable direction?",a:["Data","Information","Knowledge","Wisdom"],ans:3},
+{q:"2. The base of the DIKW pyramid is formed by:",a:["Wisdom","Knowledge","Information","Data"],ans:3},
+{q:"3. Which data-quality dimension assures no duplicate patient?",a:["Completeness","Uniqueness","Timeliness","Validity"],ans:1},
+{q:"4. “Garbage-in-garbage-out” best illustrates which MIS limitation?",a:["Poor design","User training","Poor data","Security breach"],ans:2},
+{q:"5. A system that accepts inputs, transforms them and produces outputs is called:",a:["Environment","Boundary","System","Feedback"],ans:2},
+{q:"6. The socio-technical subsystem that collects, processes, stores and distributes information is:",a:["IT","IS","DSS","TPS"],ans:1},
+{q:"7. Which component is NOT part of the basic IS model?",a:["Hardware","Software","Network","Policy manual"],ans:3},
+{q:"8. IS professionals differ from IT professionals mainly in their focus on:",a:["Business processes","Coding","Servers","Cables"],ans:0},
+{q:"9. The primary objective of a TPS is to:",a:["Support strategic decisions","Record routine transactions","Provide data mining","Generate executive dashboards"],ans:1},
+{q:"10. Which IS type is designed for semi-structured, tactical-level decisions?",a:["TPS","MIS","DSS","ESS"],ans:1},
+{q:"11. A system that uses predictive modelling and “what-if” analysis is classified as:",a:["MIS","DSS","OAS","BIS"],ans:1},
+{q:"12. Executive Support Systems are characterized by all EXCEPT:",a:["Drill-down capability","Real-time data visualization","Highly detailed transaction data","User-friendly GUI"],ans:2},
+{q:"13. Which of the following is an Office Automation System tool?",a:["Spreadsheet","MRI scanner","ICD-10 code book","Bar-code reader"],ans:0},
+{q:"14. Business Intelligence Systems mainly transform raw data into:",a:["Wisdom","Insight for decisions","Paper reports","Audio alerts"],ans:1},
+{q:"15. In healthcare, “Big Data” is described by Volume, Variety, Velocity and:",a:["Viscosity","Veracity","Visibility","Vulnerability"],ans:1},
+{q:"16. Which GAHAR standard deals with protection of records from unauthorized access?",a:["IMT.01","IMT.03","IMT.06","IMT.09"],ans:2},
+{q:"17. The legal retention of medical records is addressed in GAHAR standard:",a:["IMT.05","IMT.07","IMT.10","IMT.12"],ans:1},
+{q:"18. An EMR is distinguished from an EHR mainly by its:",a:["Ability to include images","Legal ownership","Restriction to one practice","Use of HL7 protocol"],ans:2},
+{q:"19. Which record type is controlled and managed by the patient?",a:["EMR","EHR","PHR","DSS"],ans:2},
+{q:"20. The continuum of care concept emphasizes:",a:["Single visit documentation","Population health only","Longitudinal coordinated services","Insurance billing"],ans:2},
+{q:"21. ICD-10-PCS is used for coding:",a:["Outpatient diagnoses","Inpatient procedures","Dental services","Laboratory results"],ans:1},
+{q:"22. CPT codes are maintained by the:",a:["WHO","CMS","AMA","CDC"],ans:2},
+{q:"23. HCPCS Level II codes identify:",a:["Diseases","Procedures","Supplies & DME","Nursing diagnoses"],ans:2},
+{q:"24. The first step in the medical-coding process is:",a:["Select code","Review medical record","Register code","Verify accuracy"],ans:1},
+{q:"25. Information logistics aims to deliver the right information to the right person:",a:["At the lowest cost","At the right time & form","In encrypted form only","After discharge"],ans:1},
+{q:"26. In healthcare settings, a function is usually described by:",a:["A verb","A noun or gerund","An adjective","An adverb"],ans:1},
+{q:"27. A business process has:",a:["No clear end","Definite beginning & end","Only human actors","No logical sequence"],ans:1},
+{q:"28. Which is an example of a physical data-processing system?",a:["Conceptual model","Paper chart","Data policy","User manual"],ans:1},
+{q:"29. An application system is best defined as:",a:["Software product bought in a shop","Installed & customized software on hardware","Paper form","Network cable"],ans:1},
+{q:"30. The SDLC phase that identifies feasibility and user needs is:",a:["Design","Implementation","Planning & Analysis","Support"],ans:2},
+{q:"31. During the Design phase the organization decides whether to:",a:["Delete old data","Build, buy or outsource","Train users","Evaluate vendors after go-live"],ans:1},
+{q:"32. “Go-live” occurs in which SDLC phase?",a:["Planning","Design","Implementation","Support"],ans:2},
+{q:"33. The primary focus of the Support & Evaluation phase is:",a:["Writing code","Feasibility study","Maintaining system & assessing value","Need assessment"],ans:2},
+{q:"34. Which stakeholder group most needs data privacy reassurance?",a:["Vendors","Patients","Researchers","Housing companies"],ans:1},
+{q:"35. Managers expect an MIS to provide controlling data that is:",a:["Delayed quarterly","Timely & analytic","Encrypted only","Paper-based"],ans:1},
+{q:"36. Insurance companies require HIS to verify that payments were made for:",a:["All in-patients","Their insured members","Research subjects","Vendors’ staff"],ans:1},
+{q:"37. The biggest humanistic challenge in MIS implementation is usually:",a:["Cable length","User knowledge & involvement","Colour of interface","Printer speed"],ans:1},
+{q:"38. Organizational MIS challenges include all EXCEPT:",a:["Inadequate training","Outdated documentation","High user involvement","Shortage of skilled staff"],ans:2},
+{q:"39. Which best describes “information system security”?",a:["Speed of network","Defense against unauthorized access","Number of users","Cost of hardware"],ans:1},
+{q:"40. The percentage of time a mission-critical system must be up is commonly:",a:["85 %","95 %","99.9 %","99.99 %"],ans:3}
+];
+
+const tf=[
+{q:"41. Data becomes information when context and meaning are added.",ans:true},
+{q:"42. Validity means data are free from duplication.",ans:false},
+{q:"43. Top-level management primarily uses TPS for strategic decisions.",ans:false},
+{q:"44. An EHR can contain decision-support tools such as drug-allergy alerts.",ans:true},
+{q:"45. ICD-11 is designed as a digitally native classification system.",ans:true},
+{q:"46. PHRs are legal medical records owned by the provider.",ans:false},
+{q:"47. During SDLC Implementation, workflow analysis is performed.",ans:true},
+{q:"48. “Garbage-in-garbage-out” means output quality depends on input quality.",ans:true},
+{q:"49. Researchers never need anonymized routine care data.",ans:false},
+{q:"50. Managing change is considered a major challenge in MIS deployment.",ans:true}
+];
+
+function buildExam(){
+  const form=document.getElementById('examForm');
+  let html='';
+  mcq.forEach((q,i)=>{
+    html+=`<div class="card"><div class="question">${q.q}</div><div class="options">`;
+    q.a.forEach((opt,j)=>{
+      html+=`<label><input type="radio" name="q${i}" value="${j}"> ${opt}</label>`;
+    });
+    html+='</div></div>';
+  });
+  tf.forEach((q,i)=>{
+    html+=`<div class="card"><div class="question">${q.q}</div><div class="options">
+      <label><input type="radio" name="tf${i}" value="true"> True</label>
+      <label><input type="radio" name="tf${i}" value="false"> False</label>
+    </div></div>`;
+  });
+  form.innerHTML=html;
+}
+buildExam();
+
+function checkAnswers(){
+  let score=0,total=mcq.length+tf.length,feedback='';
+  mcq.forEach((q,i)=>{
+    const sel=document.querySelector(`input[name="q${i}"]:checked`);
+    if(sel&&parseInt(sel.value)===q.ans){
+      score++;
+      feedback+=`<div class="correct">✓ Q${i+1}</div>`;
+    }else{
+      feedback+=`<div class="wrong">✗ Q${i+1} (Correct: ${q.a[q.ans]})</div>`;
+    }
+  });
+  tf.forEach((q,i)=>{
+    const sel=document.querySelector(`input[name="tf${i}"]:checked`);
+    const usr=sel?sel.value:null;
+    const cor=q.ans?"true":"false";
+    if(usr===cor){
+      score++;
+      feedback+=`<div class="correct">✓ TF${i+1}</div>`;
+    }else{
+      feedback+=`<div class="wrong">✗ TF${i+1} (Correct: ${q.ans?"True":"False"})</div>`;
+    }
+  });
+  document.getElementById('result').innerHTML=
+    `<div class="result">Your score: ${score} / ${total} (${Math.round(score/total*100)}%)</div>`+feedback;
+}
+</script>
+</body>
+</html>
